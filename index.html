@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07131f">
+<title>شهر یاخته | آزمایشگاه تعاملی یاخته جانوری</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#050b13;
+  --panel:rgba(9,22,35,.88);
+  --panel2:rgba(12,31,47,.92);
+  --line:rgba(93,210,255,.18);
+  --cyan:#5de2ff;
+  --blue:#4d8dff;
+  --green:#55efb0;
+  --yellow:#ffd166;
+  --pink:#ff6fb5;
+  --red:#ff647c;
+  --text:#eaf8ff;
+  --muted:#91adbd;
+  --shadow:0 20px 70px rgba(0,0,0,.45);
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 15%,rgba(38,145,255,.14),transparent 28%),
+    radial-gradient(circle at 80% 30%,rgba(0,255,190,.08),transparent 25%),
+    linear-gradient(145deg,#030810,#071522 50%,#040b12);
+  color:var(--text);
+  font-family:Tahoma,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+button{font-family:inherit}
+#particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;min-height:100vh}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 18px;
+  background:rgba(3,10,17,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{
+  width:48px;height:48px;border-radius:15px;
+  display:grid;place-items:center;font-size:27px;
+  background:linear-gradient(135deg,#102c45,#0b5367);
+  box-shadow:0 0 30px rgba(93,226,255,.22);
+  border:1px solid rgba(93,226,255,.3)
+}
+.brand h1{font-size:20px;margin:0}
+.brand p{font-size:11px;color:var(--muted);margin:4px 0 0}
+.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.icon-btn,.main-btn,.small-btn,.tab-btn,.choice{
+  border:1px solid var(--line);
+  background:rgba(15,36,53,.86);
+  color:var(--text);
+  cursor:pointer;
+  transition:.22s ease;
+}
+.icon-btn{
+  min-width:42px;height:42px;border-radius:12px;font-size:18px;
+}
+.icon-btn:hover,.main-btn:hover,.small-btn:hover,.tab-btn:hover,.choice:hover{
+  transform:translateY(-2px);
+  border-color:rgba(93,226,255,.55);
+  box-shadow:0 8px 25px rgba(0,0,0,.25),0 0 20px rgba(93,226,255,.08);
+}
+.hero{
+  min-height:350px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:42px 20px 25px;
+}
+.badge{
+  padding:7px 14px;border:1px solid rgba(93,226,255,.25);
+  border-radius:999px;color:var(--cyan);background:rgba(18,49,68,.4);
+  font-size:12px;margin-bottom:14px
+}
+.hero h2{
+  font-size:clamp(30px,6vw,65px);
+  margin:0;
+  background:linear-gradient(90deg,#fff,#74eaff,#55efb0);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 35px rgba(93,226,255,.12);
+}
+.hero p{max-width:760px;color:#b6cad4;line-height:2;font-size:14px;margin:16px auto 22px}
+.main-btn{
+  padding:13px 23px;border-radius:14px;
+  background:linear-gradient(135deg,#0e7188,#1556a0);
+  border-color:rgba(93,226,255,.45);
+  font-weight:bold
+}
+.dashboard{
+  width:min(1200px,94%);
+  margin:auto;
+  display:grid;grid-template-columns:1.3fr .7fr;
+  gap:16px;margin-bottom:18px
+}
+.panel{
+  background:linear-gradient(145deg,rgba(10,28,43,.9),rgba(5,17,28,.92));
+  border:1px solid var(--line);border-radius:22px;
+  box-shadow:var(--shadow);overflow:hidden
+}
+.panel-head{padding:17px 20px;border-bottom:1px solid rgba(93,210,255,.1);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.panel-head h3{margin:0;font-size:16px}
+.panel-body{padding:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat{
+  background:rgba(5,16,26,.7);border:1px solid rgba(93,210,255,.1);
+  border-radius:15px;padding:13px;text-align:center
+}
+.stat b{display:block;font-size:22px;color:var(--cyan);margin-bottom:5px}
+.stat span{font-size:11px;color:var(--muted)}
+.progress-wrap{margin-top:14px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px}
+.progress{height:9px;background:#07131d;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:inherit;transition:.5s}
+.city-wrap{
+  width:min(1200px,94%);margin:18px auto 30px;
+  position:relative
+}
+.city{
+  min-height:720px;position:relative;overflow:hidden;
+  border-radius:30px;border:1px solid rgba(93,226,255,.2);
+  background:
+    radial-gradient(circle at 50% 45%,rgba(43,181,203,.12),transparent 25%),
+    linear-gradient(180deg,rgba(9,31,46,.9),rgba(3,13,22,.96));
+  box-shadow:0 0 80px rgba(30,155,210,.08),var(--shadow)
+}
+.city:before{
+  content:"";position:absolute;inset:0;opacity:.23;
+  background-image:
+    linear-gradient(rgba(93,226,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(93,226,255,.08) 1px,transparent 1px);
+  background-size:45px 45px;
+}
+.city-title{position:absolute;top:18px;right:22px;z-index:4}
+.city-title h3{margin:0;font-size:17px}.city-title small{color:var(--muted)}
+.road{position:absolute;background:rgba(75,188,217,.07);border:1px solid rgba(93,226,255,.08)}
+.road.h{left:5%;right:5%;height:18px;top:51%;border-left:0;border-right:0}
+.road.v{top:8%;bottom:8%;width:18px;left:50%;border-top:0;border-bottom:0}
+.road.d1{width:78%;height:12px;top:50%;left:11%;transform:rotate(27deg)}
+.road.d2{width:78%;height:12px;top:50%;left:11%;transform:rotate(-27deg)}
+.building{
+  position:absolute;z-index:5;
+  width:145px;min-height:108px;
+  padding:13px 9px;
+  border-radius:19px;
+  color:var(--text);
+  background:linear-gradient(160deg,rgba(19,47,66,.94),rgba(7,24,37,.96));
+  border:1px solid rgba(93,226,255,.17);
+  box-shadow:0 12px 30px rgba(0,0,0,.3);
+  cursor:pointer;transition:.3s;
+}
+.building:hover{transform:translateY(-6px) scale(1.02)}
+.building .emoji{font-size:29px;display:block;margin-bottom:5px}
+.building strong{font-size:13px;display:block}.building small{color:var(--muted);font-size:10px}
+.building.active{border-color:rgba(85,239,176,.45);box-shadow:0 0 25px rgba(85,239,176,.08),0 15px 35px rgba(0,0,0,.35)}
+.building.done{border-color:rgba(93,226,255,.55);box-shadow:0 0 35px rgba(93,226,255,.15)}
+.building.locked{filter:grayscale(.7);opacity:.45;cursor:not-allowed}
+.building.locked:hover{transform:none}
+.building.done:after{content:"✓";position:absolute;left:9px;top:8px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#062017;font-weight:bold}
+.b1{top:10%;left:40%}.b2{top:23%;left:13%}.b3{top:25%;left:68%}
+.b4{top:43%;left:26%}.b5{top:43%;left:62%}.b6{top:59%;left:7%}
+.b7{top:60%;left:39%}.b8{top:59%;left:72%}.b9{top:75%;left:19%}
+.b10{top:76%;left:47%}.b11{top:75%;left:74%}.b12{top:39%;left:44%}
+.nucleus-glow{
+  position:absolute;top:14%;left:42%;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(98,218,255,.25),rgba(57,105,255,.04),transparent 70%);
+  animation:pulse 3s infinite;pointer-events:none
+}
+.moving-vesicles{position:absolute;inset:0;pointer-events:none;z-index:3}
+.ves{
+  position:absolute;width:9px;height:9px;border-radius:50%;
+  background:var(--pink);box-shadow:0 0 13px var(--pink);
+  animation:moveV 7s linear infinite
+}
+.ves:nth-child(2){animation-delay:-2s}.ves:nth-child(3){animation-delay:-4s}.ves:nth-child(4){animation-delay:-6s}
+@keyframes moveV{
+  0%{left:18%;top:52%}.25%{left:30%;top:45%}
+  35%{left:44%;top:50%}.55%{left:61%;top:42%}
+  75%{left:76%;top:54%}.100%{left:88%;top:43%}
+}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.6}}
+.bottom{
+  width:min(1200px,94%);margin:0 auto 35px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px
+}
+.mission-card,.badge-card{padding:20px}
+.mission-card h3,.badge-card h3{margin-top:0}
+.mission-card p{color:var(--muted);line-height:1.9;font-size:13px}
+.badges{display:flex;gap:9px;flex-wrap:wrap}
+.badge-item{
+  padding:9px 12px;border-radius:12px;
+  border:1px solid rgba(255,209,102,.15);
+  background:rgba(255,209,102,.05);color:#788c98;font-size:12px
+}
+.badge-item.earned{color:var(--yellow);border-color:rgba(255,209,102,.4);box-shadow:0 0 18px rgba(255,209,102,.07)}
+footer{text-align:center;color:#617b88;font-size:12px;padding:15px 20px 35px}
+.overlay{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(1,6,11,.78);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:14px
+}
+.overlay.show{display:flex}
+.modal{
+  width:min(900px,100%);max-height:92vh;overflow:auto;
+  background:linear-gradient(145deg,#0a2132,#06131f);
+  border:1px solid rgba(93,226,255,.25);
+  border-radius:25px;box-shadow:0 30px 100px rgba(0,0,0,.6)
+}
+.modal-head{
+  position:sticky;top:0;z-index:4;padding:15px 18px;
+  background:rgba(6,20,31,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(93,226,255,.12);
+  display:flex;align-items:center;justify-content:space-between
+}
+.modal-head h2{margin:0;font-size:19px}.close{border:0;background:transparent;color:#aac0ca;font-size:25px;cursor:pointer}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:12px}
+.tab-btn{padding:11px 7px;border-radius:12px;font-size:12px;color:#92aab6}
+.tab-btn.current{background:rgba(39,139,169,.28);border-color:rgba(93,226,255,.55);color:#fff}
+.tab-btn.done{color:var(--green);border-color:rgba(85,239,176,.25)}
+.tab-btn.disabled{opacity:.35;cursor:not-allowed}
+.stage-body{padding:8px 18px 20px}
+.section-intro{
+  padding:18px;border-radius:18px;
+  background:rgba(12,39,57,.48);border:1px solid rgba(93,226,255,.12);
+  line-height:2;font-size:14px
+}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:13px}
+.info-card{padding:14px;border-radius:15px;background:rgba(4,16,26,.65);border:1px solid rgba(93,226,255,.1);line-height:1.9}
+.info-card b{color:var(--cyan);display:block;margin-bottom:5px}
+.game-box,.quiz-box{
+  padding:18px;border-radius:19px;
+  background:linear-gradient(145deg,rgba(10,34,49,.82),rgba(5,17,28,.86));
+  border:1px solid rgba(93,226,255,.14)
+}
+.game-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.game-head h3{margin:0;font-size:16px}.lives{color:var(--yellow);font-size:13px}
+.instruction{color:#abc0ca;font-size:13px;line-height:1.9}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
+.choice{padding:14px;border-radius:15px;text-align:right;line-height:1.7}
+.choice.correct{border-color:rgba(85,239,176,.7);background:rgba(85,239,176,.1)}
+.choice.wrong{border-color:rgba(255,100,124,.7);background:rgba(255,100,124,.08)}
+.choice:disabled{cursor:default;transform:none}
+.sequence{
+  display:flex;flex-wrap:wrap;gap:9px;min-height:60px;padding:12px;
+  border-radius:15px;background:rgba(0,0,0,.15);border:1px dashed rgba(93,226,255,.15)
+}
+.seq-item{
+  border:1px solid rgba(93,226,255,.2);background:#0d2b3e;color:#eaf8ff;
+  padding:10px 13px;border-radius:12px;cursor:pointer
+}
+.seq-item.selected{border-color:var(--green);background:rgba(85,239,176,.12)}
+.drop-zone{min-height:75px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;border:1px dashed rgba(93,226,255,.3);border-radius:15px;padding:10px}
+.feedback{margin-top:13px;padding:12px;border-radius:13px;display:none;line-height:1.9;font-size:13px}
+.feedback.show{display:block}.feedback.ok{background:rgba(85,239,176,.08);border:1px solid rgba(85,239,176,.25)}.feedback.bad{background:rgba(255,100,124,.08);border:1px solid rgba(255,100,124,.25)}
+.next-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:17px}
+.small-btn{padding:10px 14px;border-radius:12px;font-size:12px}
+.small-btn.primary{background:rgba(21,102,130,.5);border-color:rgba(93,226,255,.4)}
+.small-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.quiz-question{font-size:15px;line-height:2;margin-bottom:14px}
+.answer-info{margin-top:14px;line-height:1.9;font-size:13px}
+.answer-info strong{color:var(--cyan)}
+.mistake{
+  padding:15px;margin-bottom:10px;border-radius:16px;
+  background:rgba(5,18,29,.72);border:1px solid rgba(255,100,124,.14);
+  line-height:1.9;font-size:13px
+}
+.mistake h4{margin:0 0 8px;color:#ff9aae}
+.report-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.report-item{padding:15px;border-radius:16px;background:rgba(5,18,29,.72);border:1px solid rgba(93,226,255,.1)}
+.report-item b{font-size:22px;color:var(--cyan);display:block;margin-bottom:5px}.report-item span{font-size:11px;color:var(--muted)}
+.toast{
+  position:fixed;left:50%;bottom:22px;z-index:300;
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:#0b2435;border:1px solid rgba(93,226,255,.3);
+  padding:12px 18px;border-radius:14px;box-shadow:var(--shadow);
+  transition:.3s;font-size:13px
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.spark{position:fixed;width:6px;height:6px;border-radius:50%;background:var(--cyan);z-index:500;pointer-events:none;animation:spark .8s forwards}
+@keyframes spark{to{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
+.lock-note{text-align:center;color:#718994;padding:35px 10px}
+@media(max-width:900px){
+  .dashboard,.bottom{grid-template-columns:1fr}
+  .city{min-height:850px}
+  .building{width:128px;min-height:96px}
+  .b1{top:8%;left:36%}.b2{top:20%;left:4%}.b3{top:20%;left:67%}
+  .b4{top:35%;left:18%}.b5{top:35%;left:64%}.b6{top:50%;left:2%}
+  .b7{top:50%;left:35%}.b8{top:50%;left:68%}.b9{top:65%;left:12%}
+  .b10{top:65%;left:42%}.b11{top:65%;left:71%}.b12{top:80%;left:37%}
+}
+@media(max-width:600px){
+  .topbar{align-items:flex-start}.brand p{display:none}.brand h1{font-size:16px}.brand-icon{width:40px;height:40px;font-size:22px}
+  .actions{gap:4px}.icon-btn{min-width:37px;height:37px;font-size:15px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .city{min-height:1060px}
+  .building{width:110px;padding:9px 6px}.building .emoji{font-size:23px}.building strong{font-size:11px}.building small{font-size:9px}
+  .b1{top:7%;left:35%}.b2{top:17%;left:2%}.b3{top:17%;left:64%}
+  .b4{top:29%;left:15%}.b5{top:29%;left:62%}.b6{top:41%;left:1%}
+  .b7{top:41%;left:35%}.b8{top:41%;left:68%}.b9{top:53%;left:12%}
+  .b10{top:53%;left:42%}.b11{top:53%;left:70%}.b12{top:67%;left:36%}
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .choices,.info-grid,.report-grid{grid-template-columns:1fr}
+  .modal{max-height:95vh}
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<div class="app">
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🧬</div>
+    <div>
+      <h1>شهر یاخته</h1>
+      <p>آزمایشگاه تعاملی یاختهٔ جانوری</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="icon-btn" id="soundBtn" title="صدا">🔊</button>
+    <button class="icon-btn" id="reportBtn" title="گزارش پیشرفت">📊</button>
+    <button class="icon-btn" id="mistakesBtn" title="آزمایشگاه اشتباهات">🧪</button>
+    <button class="icon-btn" id="missionBtn" title="ماموریت پروتئین">🧬</button>
+    <button class="icon-btn" id="resetBtn" title="شروع دوباره">↻</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="badge">LAB • CELL CITY • INTERACTIVE BIOLOGY</div>
+  <h2>شهر یاخته</h2>
+  <p>وارد یاخته شو؛ ساختار را ببین، عملکرد را تجربه کن، زیست را بازی کن.</p>
+  <button class="main-btn" id="startBtn">🚀 شروع سفر علمی</button>
+</section>
+
+<section class="dashboard">
+  <div class="panel">
+    <div class="panel-head">
+      <h3>📡 وضعیت شهر</h3>
+      <span id="cityStatus" style="font-size:12px;color:var(--muted)">در حال آماده‌سازی...</span>
+    </div>
+    <div class="panel-body">
+      <div class="stats">
+        <div class="stat"><b id="score">0</b><span>⭐ امتیاز دانشی</span></div>
+        <div class="stat"><b id="correctCount">0</b><span>✅ پاسخ درست</span></div>
+        <div class="stat"><b id="wrongCount">0</b><span>❌ پاسخ نادرست</span></div>
+        <div class="stat"><b id="streak">0</b><span>🔥 زنجیره پاسخ</span></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>فعال‌سازی شهر</span><b id="progressText">0%</b></div>
+        <div class="progress"><i id="progressBar"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h3>🏆 نشان‌ها</h3></div>
+    <div class="panel-body">
+      <div class="badges" id="badges"></div>
+    </div>
+  </div>
+</section>
+
+<section class="city-wrap">
+  <div class="city" id="city">
+    <div class="city-title">
+      <h3>🏙️ نقشهٔ زندهٔ شهر یاخته</h3>
+      <small>روی ساختمان‌های روشن کلیک کن</small>
+    </div>
+    <div class="nucleus-glow"></div>
+    <div class="road h"></div><div class="road v"></div><div class="road d1"></div><div class="road d2"></div>
+    <div class="moving-vesicles">
+      <i class="ves"></i><i class="ves"></i><i class="ves"></i><i class="ves"></i>
+    </div>
+
+    <button class="building b1" data-stage="nucleus">
+      <span class="emoji">🧠</span><strong>هسته</strong><small>مرکز فرماندهی</small>
+    </button>
+    <button class="building b2" data-stage="nucleolus">
+      <span class="emoji">🔴</span><strong>هستک</strong><small>مرکز تشکیل رناتن</small>
+    </button>
+    <button class="building b3" data-stage="ribosome">
+      <span class="emoji">⚙️</span><strong>رناتن</strong><small>کارخانهٔ پروتئین</small>
+    </button>
+    <button class="building b4" data-stage="rer">
+      <span class="emoji">🏭</span><strong>شبکه زبر</strong><small>ساخت و انتقال پروتئین</small>
+    </button>
+    <button class="building b5" data-stage="ser">
+      <span class="emoji">🧪</span><strong>شبکه صاف</strong><small>ساخت لیپید</small>
+    </button>
+    <button class="building b6" data-stage="mito">
+      <span class="emoji">⚡</span><strong>راکیزه</strong><small>نیروگاه انرژی</small>
+    </button>
+    <button class="building b7" data-stage="golgi">
+      <span class="emoji">📦</span><strong>دستگاه گلژی</strong><small>پردازش و بسته‌بندی</small>
+    </button>
+    <button class="building b8" data-stage="vesicle">
+      <span class="emoji">🫧</span><strong>ریزکیسه</strong><small>حمل‌ونقل مواد</small>
+    </button>
+    <button class="building b9" data-stage="lysosome">
+      <span class="emoji">♻️</span><strong>کافنده‌تن</strong><small>تجزیه و بازیافت</small>
+    </button>
+    <button class="building b10" data-stage="centriole">
+      <span class="emoji">🧲</span><strong>میانک</strong><small>تقسیم یاخته</small>
+    </button>
+    <button class="building b11" data-stage="membrane">
+      <span class="emoji">🛡️</span><strong>غشای یاخته</strong><small>مرز هوشمند</small>
+    </button>
+    <button class="building b12" data-stage="cytoplasm">
+      <span class="emoji">🌌</span><strong>سیتوپلاسم</strong><small>فضای داخلی شهر</small>
+    </button>
+  </div>
+</section>
+
+<section class="bottom">
+  <div class="panel mission-card">
+    <h3>🧬 مسیر یک پروتئین</h3>
+    <p>در این مأموریت باید مسیر واقعی یک پروتئین ترشحی را از رناتن تا مقصد مرتب کنی.</p>
+    <button class="small-btn primary" id="missionBtn2">شروع مأموریت</button>
+  </div>
+  <div class="panel badge-card">
+    <h3>🎖️ مسیر یادگیری</h3>
+    <div id="pathText" style="color:var(--muted);font-size:12px;line-height:2">
+      هر مرحله را کامل کن تا منطقهٔ بعدی شهر فعال شود.
+    </div>
+  </div>
+</section>
+
+<footer>ساخته شده با عشق توسط مبینا اعظمی و نرگس گودرزی</footer>
+</div>
+
+<div class="overlay" id="stageOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="stageTitle"></h2>
+      <button class="close" id="closeStage">×</button>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="stage-body" id="stageBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="genericOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="genericTitle"></h2>
+      <button class="close" id="closeGeneric">×</button>
+    </div>
+    <div class="stage-body" id="genericBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* =========================
+   داده‌های مراحل
+========================= */
+
+const STAGES = [
+  {
+    id:"nucleus", title:"هسته", icon:"🧠", role:"مرکز فرماندهی",
+    intro:"هسته مانند مرکز فرماندهی شهر است؛ اطلاعات ژنتیکی را در خود نگه می‌دارد و در کنترل فعالیت‌های یاخته نقش دارد.",
+    explore:[
+      ["ساختار","پوشش هسته‌ای، مادهٔ ژنتیکی و هستک در ارتباط با هسته‌اند."],
+      ["وظیفه","نگهداری اطلاعات ژنتیکی و تنظیم بسیاری از فعالیت‌های یاخته."],
+      ["دام تستی","هستک داخل هسته است؛ هسته داخل هستک نیست."]
+    ]
+  },
+  {
+    id:"nucleolus", title:"هستک", icon:"🔴", role:"مرکز تشکیل رناتن",
+    intro:"درون هسته، هستک مانند کارگاه مونتاژ قطعات رناتن فعالیت می‌کند.",
+    explore:[
+      ["ساختار","هستک بخشی درون هسته است و غشای مستقل مانند هسته ندارد."],
+      ["وظیفه","در تشکیل اجزای رناتن نقش دارد."],
+      ["زنجیره","هستک ← رناتن ← ساخت پروتئین"]
+    ]
+  },
+  {
+    id:"ribosome", title:"رناتن", icon:"⚙️", role:"کارخانه ساخت پروتئین",
+    intro:"رناتن‌ها کارخانه‌های کوچک شهر هستند؛ اطلاعات لازم را به کار می‌گیرند تا پروتئین ساخته شود.",
+    explore:[
+      ["ساختار","رناتن ساختاری بدون غشای مستقل است."],
+      ["وظیفه","محل ساخت پروتئین است."],
+      ["اتصال به شبکه","رناتن‌های متصل به شبکه آندوپلاسمی زبر در ساخت پروتئین‌های مسیر ترشحی نقش دارند."]
+    ]
+  },
+  {
+    id:"rer", title:"شبکه آندوپلاسمی زبر", icon:"🏭", role:"شبکه ساخت و انتقال پروتئین",
+    intro:"شبکه زبر به دلیل وجود رناتن‌های متصل به سطح خود زبر دیده می‌شود و در مسیر ساخت و انتقال برخی پروتئین‌ها نقش دارد.",
+    explore:[
+      ["ویژگی","رناتن‌های متصل به سطح، ویژگی مهم شبکه زبر هستند."],
+      ["وظیفه","در ساخت و انتقال برخی پروتئین‌ها نقش دارد."],
+      ["مسیر","رناتن → شبکه زبر → گلژی → ریزکیسه"]
+    ]
+  },
+  {
+    id:"ser", title:"شبکه آندوپلاسمی صاف", icon:"🧪", role:"بخش ساخت لیپید",
+    intro:"شبکه صاف کارخانهٔ چربی‌های زیستی شهر است و برخلاف شبکه زبر، رناتن‌های متصل به سطح ندارد.",
+    explore:[
+      ["ویژگی","رناتن‌های متصل به سطح ندارد."],
+      ["وظیفه","در ساخت لیپیدها نقش دارد."],
+      ["دام تستی","پروتئین → رناتن و شبکه زبر؛ لیپید → شبکه صاف"]
+    ]
+  },
+  {
+    id:"mito", title:"راکیزه", icon:"⚡", role:"نیروگاه انرژی",
+    intro:"راکیزه یا میتوکندری نیروگاه شهر است و در تأمین انرژی مورد نیاز یاخته نقش دارد.",
+    explore:[
+      ["ساختار","راکیزه اندامکی دارای دو غشا است."],
+      ["وظیفه","در تأمین انرژی یاخته نقش دارد."],
+      ["دام تستی","انرژی → راکیزه؛ بسته‌بندی → گلژی؛ تجزیه → کافنده‌تن"]
+    ]
+  },
+  {
+    id:"golgi", title:"دستگاه گلژی", icon:"📦", role:"مرکز پردازش و بسته‌بندی",
+    intro:"گلژی مانند مرکز پست هوشمند شهر عمل می‌کند؛ برخی مواد را پردازش، مرتب و برای انتقال آماده می‌کند.",
+    explore:[
+      ["وظیفه","پردازش، بسته‌بندی و آماده‌سازی برخی مواد برای انتقال یا ترشح."],
+      ["مسیر پروتئین","پروتئین‌های مسیر ترشحی پس از شبکه زبر می‌توانند به گلژی برسند."],
+      ["دام تستی","گلژی محل اصلی ساخت پروتئین نیست."]
+    ]
+  },
+  {
+    id:"vesicle", title:"ریزکیسه", icon:"🫧", role:"وسیله حمل‌ونقل مواد",
+    intro:"ریزکیسه‌ها بسته‌های حمل‌ونقل شهر هستند و برخی مواد را بین بخش‌های مختلف یاخته جابه‌جا می‌کنند.",
+    explore:[
+      ["وظیفه","جابه‌جایی برخی مواد درون یاخته."],
+      ["ارتباط","در مسیرهای مرتبط با شبکه آندوپلاسمی و گلژی نقش دارند."],
+      ["دام تستی","ریزکیسه نقش اصلی‌اش انتقال است، نه ساخت پروتئین یا تأمین انرژی."]
+    ]
+  },
+  {
+    id:"lysosome", title:"کافنده‌تن", icon:"♻️", role:"بخش تجزیه و بازیافت",
+    intro:"کافنده‌تن یا لیزوزوم مرکز بازیافت شهر است و آنزیم‌هایی دارد که در تجزیه مواد نقش دارند.",
+    explore:[
+      ["ساختار","کافنده‌تن اندامکی غشادار است."],
+      ["وظیفه","آنزیم‌های آن در تجزیه مواد و گوارش درون‌یاخته‌ای نقش دارند."],
+      ["دام تستی","وجود آنزیم به معنی محل ساخت آنزیم نیست."]
+    ]
+  },
+  {
+    id:"centriole", title:"میانک", icon:"🧲", role:"بخش مرتبط با تقسیم یاخته",
+    intro:"میانک یا سانتریول در یاخته جانوری ساختاری بدون غشا است که در فرایند تقسیم یاخته نقش دارد.",
+    explore:[
+      ["ساختار","ساختاری بدون غشای مستقل."],
+      ["وظیفه","در تقسیم یاخته نقش دارد."],
+      ["دام تستی","میانک → تقسیم؛ راکیزه → تأمین انرژی"]
+    ]
+  },
+  {
+    id:"membrane", title:"غشای یاخته", icon:"🛡️", role:"مرز هوشمند شهر",
+    intro:"غشای یاخته مرز انتخابی شهر است و ورود و خروج مواد را تنظیم می‌کند.",
+    explore:[
+      ["ساختار","دارای دولایه فسفولیپیدی و اجزایی مانند پروتئین و کلسترول."],
+      ["وظیفه","تنظیم ورود و خروج مواد."],
+      ["دام تستی","کلسترول و فسفولیپید یک ماده یا یک ساختار نیستند."]
+    ]
+  },
+  {
+    id:"cytoplasm", title:"سیتوپلاسم", icon:"🌌", role:"فضای داخلی شهر",
+    intro:"سیتوپلاسم محیط داخلی یاخته در بیرون از هسته است که ماده زمینه‌ای و اندامک‌های مختلف را دربرمی‌گیرد.",
+    explore:[
+      ["تعریف","بخش درون یاخته بین پوشش هسته و غشای یاخته."],
+      ["محتوا","شامل ماده زمینه‌ای یاخته و اندامک‌های موجود در آن."],
+      ["دام تستی","سیتوپلاسم را با فقط مایع درون یاخته یکی ندان."]
+    ]
+  }
+];
+
+const Q = [
+ {id:1,stage:"nucleus",q:"کدام گزینه دربارهٔ هسته و هستک در یاختهٔ جانوری درست است؟",options:["هستک در خارج از هسته قرار دارد.","هستک بخشی از سیتوپلاسم است.","هستک درون هسته قرار دارد و در تشکیل رناتن نقش دارد.","هسته درون هستک قرار دارد."],correct:"هستک درون هسته قرار دارد و در تشکیل رناتن نقش دارد.",explanation:"هسته یکی از بخش‌های اصلی یاختهٔ یوکاریوتی است و هستک درون هسته قرار دارد. هستک در تشکیل رناتن نقش دارد.",trap:"هسته و هستک را جابه‌جا نکن؛ هستک داخل هسته است، نه برعکس."},
+ {id:2,stage:"cytoplasm",q:"کدام گزینه تعریف مناسب‌تری از سیتوپلاسم یاختهٔ جانوری ارائه می‌دهد؟",options:["تمام فضای درون هسته","فقط مایع درون یاخته","بخش درون یاخته بین پوشش هسته و غشای یاخته","فقط اندامک‌های یاخته"],correct:"بخش درون یاخته بین پوشش هسته و غشای یاخته",explanation:"سیتوپلاسم به بخش درون یاخته، بین پوشش هسته و غشای یاخته گفته می‌شود و شامل مادهٔ زمینه‌ای یاخته و اندامک‌های موجود در آن است.",trap:"سیتوپلاسم را با «فقط مایع درون یاخته» یکی ندان."},
+ {id:3,stage:"rer",q:"کدام گزینه تفاوت درستی بین شبکهٔ آندوپلاسمی زبر و صاف را بیان می‌کند؟",options:["هر دو دارای رناتن‌های متصل به سطح خود هستند.","شبکهٔ زبر دارای رناتن‌های متصل به سطح خود است، ولی شبکهٔ صاف چنین رناتن‌هایی ندارد.","شبکهٔ صاف دارای رناتن است و شبکهٔ زبر فاقد آن است.","هر دو فاقد رناتن هستند."],correct:"شبکهٔ زبر دارای رناتن‌های متصل به سطح خود است، ولی شبکهٔ صاف چنین رناتن‌هایی ندارد.",explanation:"وجود رناتن‌های متصل به سطح شبکهٔ آندوپلاسمی باعث زبر بودن آن می‌شود. در شبکهٔ صاف این رناتن‌های متصل وجود ندارند.",trap:"تفاوت مهم در تست‌ها، وجود یا نبود رناتن متصل است."},
+ {id:4,stage:"golgi",q:"در مسیر ترشح برخی مواد از یاخته، کدام گزینه نقش دستگاه گلژی و ریزکیسه‌ها را بهتر بیان می‌کند؟",options:["ساخت ماده در رناتن و انتقال آن به وسیلهٔ ریزکیسه پس از پردازش و بسته‌بندی در گلژی","تولید انرژی در گلژی و انتقال آن توسط ریزکیسه","ساخت پروتئین در گلژی و تجزیهٔ آن در ریزکیسه","ساخت لیپید در گلژی و تبدیل آن به انرژی در ریزکیسه"],correct:"ساخت ماده در رناتن و انتقال آن به وسیلهٔ ریزکیسه پس از پردازش و بسته‌بندی در گلژی",explanation:"رناتن در ساخت پروتئین نقش دارد، شبکه زبر و گلژی در مسیر پردازش و بسته‌بندی آن نقش دارند و ریزکیسه‌ها در جابه‌جایی مواد نقش دارند.",trap:"گلژی محل اصلی ساخت پروتئین نیست؛ نقش مهم آن پردازش، بسته‌بندی و آماده‌سازی برای انتقال است."},
+ {id:5,stage:"mito",q:"کدام گزینه دربارهٔ راکیزه درست است؟",options:["اندامکی بدون غشا است که پروتئین می‌سازد.","اندامکی تک‌غشایی است که مواد را بسته‌بندی می‌کند.","اندامکی دارای دو غشا است که در تأمین انرژی یاخته نقش دارد.","اندامکی است که مواد درون یاخته را هضم می‌کند."],correct:"اندامکی دارای دو غشا است که در تأمین انرژی یاخته نقش دارد.",explanation:"راکیزه یا میتوکندری اندامکی دوغشایی است و در تأمین انرژی یاخته نقش دارد.",trap:"انرژی → راکیزه؛ بسته‌بندی → گلژی؛ هضم درون‌یاخته‌ای → کافنده‌تن؛ ساخت پروتئین → رناتن."},
+ {id:6,stage:"centriole",q:"کدام گزینه دربارهٔ میانک درست است؟",options:["اندامکی دوغشایی است که در تأمین انرژی نقش دارد.","اندامکی تک‌غشایی است که در گوارش یاخته‌ای نقش دارد.","ساختاری بدون غشا است که در تقسیم یاخته نقش دارد.","اندامکی است که پروتئین‌ها را بسته‌بندی می‌کند."],correct:"ساختاری بدون غشا است که در تقسیم یاخته نقش دارد.",explanation:"میانک یا سانتریول ساختاری بدون غشا است که در یاخته‌های جانوری وجود دارد و در تقسیم یاخته نقش دارد.",trap:"میانک را با راکیزه اشتباه نکن؛ میانک → تقسیم، راکیزه → تأمین انرژی."},
+ {id:7,stage:"lysosome",q:"کدام گزینه دربارهٔ کافنده‌تن درست است؟",options:["دارای آنزیم‌هایی است که در تجزیهٔ مواد نقش دارند.","محل اصلی ساخت پروتئین است.","در تأمین انرژی یاخته نقش اصلی دارد.","فاقد غشا است و در تقسیم یاخته فعالیت می‌کند."],correct:"دارای آنزیم‌هایی است که در تجزیهٔ مواد نقش دارند.",explanation:"کافنده‌تن یا لیزوزوم دارای آنزیم‌هایی است که در تجزیه مواد و گوارش درون‌یاخته‌ای نقش دارند.",trap:"وجود آنزیم به معنی محل ساخت آنزیم نیست؛ کافنده‌تن محل عملکرد آنزیم‌های گوارشی است."},
+ {id:8,stage:"nucleolus",q:"اگر فعالیت هستک در یک یاخته کاهش یابد، کدام مورد مستقیماً بیشتر تحت تأثیر قرار می‌گیرد؟",options:["تشکیل رناتن","تشکیل غشای یاخته","تأمین انرژی توسط راکیزه","فعالیت کافنده‌تن"],correct:"تشکیل رناتن",explanation:"هستک در تشکیل رناتن نقش دارد. رناتن نیز در ساخت پروتئین نقش دارد.",trap:"هستک را با خود رناتن اشتباه نکن؛ هستک در تشکیل رناتن نقش دارد."},
+ {id:9,stage:"membrane",q:"کدام گزینه دربارهٔ غشای یاختهٔ جانوری درست است؟",options:["غشای یاخته فقط از پروتئین ساخته شده است.","غشای یاخته دارای دولایهٔ فسفولیپیدی است و کلسترول نیز در آن وجود دارد.","غشای یاخته فقط از کلسترول تشکیل شده است.","غشای یاخته فاقد فسفولیپید است."],correct:"غشای یاخته دارای دولایهٔ فسفولیپیدی است و کلسترول نیز در آن وجود دارد.",explanation:"غشای یاخته دارای دولایه فسفولیپیدی است و موادی مانند پروتئین و کلسترول نیز در ساختار آن نقش دارند.",trap:"کلسترول را با فسفولیپید یکی ندان؛ هر دو از اجزای غشا هستند اما ساختار و نقش یکسانی ندارند."},
+ {id:10,stage:"ser",q:"کدام گزینه ارتباط مناسبی بین شبکهٔ آندوپلاسمی صاف و فعالیت یاخته بیان می‌کند؟",options:["شبکهٔ صاف به علت داشتن رناتن‌های فراوان، محل اصلی ساخت پروتئین است.","شبکهٔ صاف در ساخت لیپیدها نقش دارد.","شبکهٔ صاف محل اصلی تجزیهٔ مواد در یاخته است.","شبکهٔ صاف مسئول بسته‌بندی نهایی مواد در یاخته است."],correct:"شبکهٔ صاف در ساخت لیپیدها نقش دارد.",explanation:"یکی از نقش‌های مهم شبکهٔ آندوپلاسمی صاف، ساخت لیپیدها است.",trap:"پروتئین → رناتن و شبکه زبر؛ لیپید → شبکه صاف."},
+ {id:11,stage:"ribosome",q:"کدام زنجیرهٔ ارتباطی درست است؟",options:["هستک → رناتن → ساخت پروتئین","هستک → راکیزه → تأمین انرژی","میانک → رناتن → ساخت پروتئین","کافنده‌تن → گلژی → ساخت پروتئین"],correct:"هستک → رناتن → ساخت پروتئین",explanation:"در سطح کتاب درسی، ارتباط مهم این است: هستک → تشکیل رناتن → ساخت پروتئین.",trap:"اگر گزینه‌ای «هستک → پروتئین» را بدون واسطه دیدی، ارتباط دقیق‌تر هستک → رناتن → پروتئین است."},
+ {id:14,stage:"vesicle",q:"کدام گزینه نقش اصلی ریزکیسه‌ها را بهتر بیان می‌کند؟",options:["تأمین انرژی یاخته","ساخت پروتئین","جابه‌جایی برخی مواد درون یاخته","تجزیهٔ مواد درون یاخته"],correct:"جابه‌جایی برخی مواد درون یاخته",explanation:"ریزکیسه‌ها یا وزیکول‌ها در جابه‌جایی برخی مواد درون یاخته نقش دارند؛ برای مثال در مسیر انتقال مواد مرتبط با شبکه آندوپلاسمی و دستگاه گلژی.",trap:"ریزکیسه خودش ماده را نمی‌سازد یا تجزیه نمی‌کند؛ نقش اصلی آن در این مبحث انتقال است."},
+ {id:15,stage:"golgi",q:"کدام گزینه دربارهٔ دستگاه گلژی درست است؟",options:["محل اصلی ساخت پروتئین در یاخته است.","در بسته‌بندی و آماده‌سازی برخی مواد برای انتقال یا ترشح نقش دارد.","محل اصلی تأمین انرژی یاخته است.","ساختاری بدون غشا است که در تقسیم یاخته نقش دارد."],correct:"در بسته‌بندی و آماده‌سازی برخی مواد برای انتقال یا ترشح نقش دارد.",explanation:"دستگاه گلژی در پردازش، بسته‌بندی و آماده‌سازی برخی مواد برای انتقال یا ترشح نقش دارد.",trap:"رناتن → ساخت پروتئین؛ راکیزه → تأمین انرژی؛ کافنده‌تن → تجزیه؛ میانک → تقسیم؛ گلژی → بسته‌بندی و انتقال/ترشح."}
+];
+
+/* =========================
+   بازی‌های تعاملی متفاوت
+========================= */
+
+const GAMES = {
+ nucleus:{
+   title:"رمزگشایی مرکز فرماندهی",
+   type:"choice",
+   instruction:"سه وظیفه‌ای را پیدا کن که واقعاً به هسته مربوط‌اند. پاسخ‌ها به صورت تصادفی نمایش داده می‌شوند.",
+   make(){
+     return {
+       correct:["نگهداری اطلاعات ژنتیکی","تنظیم بسیاری از فعالیت‌های یاخته","ارتباط با هستک درون هسته"],
+       options:shuffle([
+        "نگهداری اطلاعات ژنتیکی","تنظیم بسیاری از فعالیت‌های یاخته","ارتباط با هستک درون هسته",
+        "ساخت ATP به عنوان وظیفه اصلی","بسته‌بندی مواد در گلژی","تجزیه مواد توسط آنزیم‌های کافنده‌تن"
+       ])
+     }
+   }
+ },
+ nucleolus:{
+   title:"جورچین کارخانه رناتن",
+   type:"sequence",
+   instruction:"قطعات مفهومی را به ترتیب درست بچین. روی گزینه‌ها کلیک کن تا وارد مسیر شوند.",
+   make(){return {items:shuffle(["هسته","هستک","تشکیل اجزای رناتن","رناتن","ساخت پروتئین"])}},
+   correct:["هسته","هستک","تشکیل اجزای رناتن","رناتن","ساخت پروتئین"]
+ },
+ ribosome:{
+   title:"خط تولید پروتئین",
+   type:"sequence",
+   instruction:"مراحل خط تولید را از نقطه شروع تا محصول نهایی مرتب کن.",
+   make(){return {items:shuffle(["پیام ژنتیکی","رناتن","آماده‌سازی آمینواسیدها","ساخت زنجیره پروتئینی","پروتئین"])}},
+   correct:["پیام ژنتیکی","رناتن","آماده‌سازی آمینواسیدها","ساخت زنجیره پروتئینی","پروتئین"]
+ },
+ rer:{
+   title:"مسیر هوشمند شبکه زبر",
+   type:"connect",
+   instruction:"هر کارت را به مقصد درست وصل کن. ابتدا یک کارت را انتخاب و سپس مقصد مناسب را انتخاب کن.",
+   make(){
+     return {
+       pairs:[
+        ["رناتن متصل","ساخت پروتئین"],
+        ["شبکه زبر","پردازش/انتقال اولیه پروتئین"],
+        ["گلژی","بسته‌بندی"],
+        ["ریزکیسه","حمل ماده"]
+       ]
+     }
+   }
+ },
+ ser:{
+   title:"کارخانه چربی",
+   type:"choice",
+   instruction:"برای فعال کردن کارخانه صاف، فرایندی را انتخاب کن که با نقش اصلی شبکه آندوپلاسمی صاف هماهنگ است.",
+   make(){return {correct:["ساخت لیپید"],options:shuffle(["ساخت لیپید","ساخت مستقیم ATP","تجزیه مواد توسط لیزوزوم","ساخت پروتئین توسط رناتن"])}} 
+ },
+ mito:{
+   title:"مدار نیروگاه انرژی",
+   type:"choice",
+   instruction:"سه کارت مرتبط با نقش راکیزه را پیدا کن.",
+   make(){return {correct:["دارای دو غشا","نقش در تأمین انرژی یاخته","نیروگاه یاخته"],options:shuffle(["دارای دو غشا","نقش در تأمین انرژی یاخته","نیروگاه یاخته","بسته‌بندی مواد","تقسیم یاخته","محل اصلی ساخت لیپید"])}} 
+ },
+ golgi:{
+   title:"مرکز بسته‌بندی هوشمند",
+   type:"match",
+   instruction:"مواد را به مقصد مناسبشان هدایت کن. هر بار یک ماده و یک مقصد را انتخاب کن.",
+   make(){
+     return {pairs:[
+       ["پروتئین ترشحی","بسته‌بندی برای ترشح"],
+       ["ماده در مسیر انتقال","ریزکیسه"],
+       ["ماده پردازش‌شده","آماده‌سازی برای مقصد"]
+     ]}
+   }
+ },
+ vesicle:{
+   title:"پیک ریزکیسه",
+   type:"path",
+   instruction:"یک مسیر حمل‌ونقل درست برای ریزکیسه بساز.",
+   make(){return {items:shuffle(["بار سلولی","تشکیل ریزکیسه","حرکت درون یاخته","رسیدن به مقصد"]),correct:["بار سلولی","تشکیل ریزکیسه","حرکت درون یاخته","رسیدن به مقصد"]}}
+ },
+ lysosome:{
+   title:"مرکز بازیافت",
+   type:"choice",
+   instruction:"مواردی را که با نقش کافنده‌تن هماهنگ‌اند انتخاب کن.",
+   make(){return {correct:["تجزیه مواد","گوارش درون‌یاخته‌ای","استفاده از آنزیم‌ها"],options:shuffle(["تجزیه مواد","گوارش درون‌یاخته‌ای","استفاده از آنزیم‌ها","ساخت پروتئین","تأمین انرژی اصلی","بسته‌بندی پروتئین"])}} 
+ },
+ centriole:{
+   title:"ماموریت تقسیم شهر",
+   type:"sequence",
+   instruction:"مراحل مفهومی مرتبط با نقش میانک در تقسیم یاخته را مرتب کن.",
+   make(){return {items:shuffle(["آماده شدن یاخته برای تقسیم","نقش ساختارهای مرتبط با میانک","سازمان‌دهی در فرایند تقسیم","تشکیل یاخته‌های جدید"]),correct:["آماده شدن یاخته برای تقسیم","نقش ساختارهای مرتبط با میانک","سازمان‌دهی در فرایند تقسیم","تشکیل یاخته‌های جدید"]}}
+ },
+ membrane:{
+   title:"دروازه‌بان غشا",
+   type:"choice",
+   instruction:"کدام سه مورد درباره غشای یاخته درست‌اند؟",
+   make(){return {correct:["دولایه فسفولیپیدی","وجود کلسترول","تنظیم ورود و خروج مواد"],options:shuffle(["دولایه فسفولیپیدی","وجود کلسترول","تنظیم ورود و خروج مواد","فقط از پروتئین ساخته شده","فاقد فسفولیپید","محل اصلی ساخت پروتئین"])}} 
+ },
+ cytoplasm:{
+   title:"نقشه‌برداری شهر داخلی",
+   type:"connect",
+   instruction:"هر بخش را با تعریف مناسبش جفت کن.",
+   make(){return {pairs:[
+     ["سیتوپلاسم","بخش درون یاخته بین پوشش هسته و غشای یاخته"],
+     ["ماده زمینه‌ای","بخشی از محیط داخلی یاخته"],
+     ["اندامک‌ها","ساختارهای دارای نقش‌های تخصصی درون یاخته"]
+   ]}}
+ }
+};
+
+/* =========================
+   وضعیت
+========================= */
+
+const DEFAULT_STATE = {
+ unlocked:["nucleus"],
+ done:[],
+ tab:{},
+ chances:{},
+ answered:{},
+ mistakes:[],
+ badges:[],
+ missionDone:false,
+ sound:true
+};
+
+let S = loadState();
+let currentStage = null;
+let currentGame = null;
+let quizQuestion = null;
+let sessionScore = 0;
+let sessionCorrect = 0;
+let sessionWrong = 0;
+let streak = 0;
+let audioCtx = null;
+let ambient = null;
+
+function cloneDefault(){
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
+function loadState(){
+  try{
+    const raw=localStorage.getItem("cellCityStateV4");
+    if(!raw)return cloneDefault();
+    const x=JSON.parse(raw);
+    const d=cloneDefault();
+    return {
+      ...d,...x,
+      unlocked:Array.isArray(x.unlocked)&&x.unlocked.length?x.unlocked:d.unlocked,
+      done:Array.isArray(x.done)?x.done:[],
+      tab:x.tab||{},chances:x.chances||{},answered:x.answered||{},
+      mistakes:Array.isArray(x.mistakes)?x.mistakes:[],
+      badges:Array.isArray(x.badges)?x.badges:[],
+      missionDone:!!x.missionDone,
+      sound:x.sound!==false
+    };
+  }catch(e){return cloneDefault()}
+}
+function saveState(){
+  localStorage.setItem("cellCityStateV4",JSON.stringify(S));
+}
+function stageIndex(id){return STAGES.findIndex(s=>s.id===id)}
+function stageById(id){return STAGES.find(s=>s.id===id)}
+function isUnlocked(id){return S.unlocked.includes(id)}
+function isDone(id){return S.done.includes(id)}
+function ensureStageState(id){
+  if(typeof S.tab[id]!=="number")S.tab[id]=0;
+  if(typeof S.chances[id]!=="number")S.chances[id]=3;
+}
+function unlockNext(id){
+  const i=stageIndex(id), next=STAGES[i+1];
+  if(next && !S.unlocked.includes(next.id)){
+    S.unlocked.push(next.id);
+    S.tab[next.id]=0;
+    S.chances[next.id]=3;
+    unlockSound();
+  }
+  saveState();
+}
+function awardBadges(){
+  const rules=[
+    ["nucleus","🏆 کاشف هسته"],
+    ["networks","🏆 استاد شبکه‌ها"],
+    ["factory","🏆 مدیر کارخانه"],
+    ["all","🏆 شهروند برتر یاخته"]
+  ];
+  const earned=[];
+  if(isDone("nucleus"))earned.push(rules[0][1]);
+  if(isDone("rer")&&isDone("ser"))earned.push(rules[1][1]);
+  if(isDone("golgi")&&isDone("vesicle"))earned.push(rules[2][1]);
+  if(S.done.length===STAGES.length)earned.push(rules[3][1]);
+  S.badges=earned;
+  saveState();
+}
+function completeStage(id){
+  if(!S.done.includes(id))S.done.push(id);
+  S.tab[id]=4;
+  S.chances[id]=3;
+  awardBadges();
+  unlockNext(id);
+  renderAll();
+  burst(window.innerWidth/2,window.innerHeight/2);
+  successSound();
+}
+function resetProgress(){
+  if(!confirm("پیشرفت، اشتباهات و نشان‌ها پاک شوند؟"))return;
+  S=cloneDefault();
+  sessionScore=0;sessionCorrect=0;sessionWrong=0;streak=0;
+  saveState();renderAll();toast("شهر دوباره از مرکز فرماندهی شروع شد.");
+}
+
+/* =========================
+   ابزارها
+========================= */
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function esc(v){
+  return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;el.classList.add("show");
+  clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2600);
+}
+function addScore(n){
+  sessionScore+=n;
+  updateDashboard();
+}
+function correctAction(points=10){
+  sessionCorrect++;
+  streak++;
+  addScore(points+Math.min(streak,5));
+  successSound();
+  updateDashboard();
+}
+function wrongAction(){
+  sessionWrong++;
+  streak=0;
+  errorSound();
+  updateDashboard();
+}
+function useChance(){
+  ensureStageState(currentStage);
+  S.chances[currentStage]=Math.max(0,S.chances[currentStage]-1);
+  saveState();
+  return S.chances[currentStage];
+}
+function resetCurrentGameChance(){
+  ensureStageState(currentStage);
+  S.chances[currentStage]=3;
+  saveState();
+}
+function chancesText(id){
+  ensureStageState(id);
+  return "❤️".repeat(S.chances[id])+"🖤".repeat(3-S.chances[id]);
+}
+
+/* =========================
+   صدا
+========================= */
+
+function getAudio(){
+  if(!audioCtx){
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C)return null;
+    audioCtx=new C();
+  }
+  if(audioCtx.state==="suspended")audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq,dur,type="sine",gain=.035){
+  if(!S.sound)return;
+  const c=getAudio();if(!c)return;
+  const o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(gain,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);
+  o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);
+}
+function clickSound(){tone(430,.07,"sine",.025)}
+function successSound(){tone(650,.09,"sine",.035);setTimeout(()=>tone(900,.15,"sine",.03),75)}
+function errorSound(){tone(180,.16,"sawtooth",.025)}
+function unlockSound(){tone(500,.1,"triangle",.03);setTimeout(()=>tone(800,.12,"triangle",.03),90);setTimeout(()=>tone(1100,.18,"triangle",.025),190)}
+function missionSound(){tone(500,.1,"sine",.03);setTimeout(()=>tone(700,.1,"sine",.03),100);setTimeout(()=>tone(1000,.25,"sine",.035),200)}
+
+function startAmbient(){
+  if(!S.sound||ambient)return;
+  const c=getAudio();if(!c)return;
+  const master=c.createGain();
+  master.gain.value=.018;
+  master.connect(c.destination);
+  const filter=c.createBiquadFilter();
+  filter.type="lowpass";filter.frequency.value=850;
+  filter.connect(master);
+  const o1=c.createOscillator(),o2=c.createOscillator();
+  o1.type="sine";o2.type="triangle";
+  o1.frequency.value=72;o2.frequency.value=108;
+  const g1=c.createGain(),g2=c.createGain();
+  g1.gain.value=.8;g2.gain.value=.25;
+  o1.connect(g1);g1.connect(filter);o2.connect(g2);g2.connect(filter);
+  o1.start();o2.start();
+  ambient={o1,o2,g1,g2,filter,master};
+}
+function stopAmbient(){
+  if(!ambient)return;
+  try{ambient.o1.stop();ambient.o2.stop()}catch(e){}
+  Object.values(ambient).forEach(n=>{if(n&&n.disconnect)try{n.disconnect()}catch(e){}});
+  ambient=null;
+}
+function toggleSound(){
+  S.sound=!S.sound;saveState();
+  if(S.sound){getAudio();startAmbient();document.getElementById("soundBtn").textContent="🔊";toast("صدای شهر روشن شد")}
+  else{stopAmbient();document.getElementById("soundBtn").textContent="🔇";toast("صدای شهر خاموش شد")}
+}
+
+/* =========================
+   شهر و داشبورد
+========================= */
+
+function renderCity(){
+  document.querySelectorAll(".building").forEach(b=>{
+    const id=b.dataset.stage;
+    b.classList.toggle("locked",!isUnlocked(id));
+    b.classList.toggle("active",isUnlocked(id));
+    b.classList.toggle("done",isDone(id));
+  });
+}
+function renderBadges(){
+  awardBadges();
+  const names=[
+    ["🏆 کاشف هسته",S.badges.includes("🏆 کاشف هسته")],
+    ["🏆 استاد شبکه‌ها",S.badges.includes("🏆 استاد شبکه‌ها")],
+    ["🏆 مدیر کارخانه",S.badges.includes("🏆 مدیر کارخانه")],
+    ["🏆 شهروند برتر یاخته",S.badges.includes("🏆 شهروند برتر یاخته")]
+  ];
+  document.getElementById("badges").innerHTML=names.map(x=>`<div class="badge-item ${x[1]?"earned":""}">${x[1]?"✓ ":"🔒 "}${x[0]}</div>`).join("");
+}
+function updateDashboard(){
+  const pct=Math.round(S.done.length/STAGES.length*100);
+  document.getElementById("score").textContent=sessionScore;
+  document.getElementById("correctCount").textContent=sessionCorrect;
+  document.getElementById("wrongCount").textContent=sessionWrong;
+  document.getElementById("streak").textContent=streak;
+  document.getElementById("progressText").textContent=pct+"%";
+  document.getElementById("progressBar").style.width=pct+"%";
+  document.getElementById("cityStatus").textContent=
+    pct===100?"تمام شهر فعال است!":`${S.done.length} از ${STAGES.length} منطقه فعال شده`;
+  document.getElementById("pathText").innerHTML=
+    `منطقه فعال فعلی: <b style="color:var(--cyan)">${stageById(S.unlocked[S.unlocked.length-1])?.title||"هسته"}</b><br>
+     مناطق کامل‌شده: ${S.done.length} از ${STAGES.length}`;
+}
+function renderAll(){
+  renderCity();renderBadges();updateDashboard();
+  document.getElementById("soundBtn").textContent=S.sound?"🔊":"🔇";
+}
+
+/* =========================
+   باز کردن مرحله
+========================= */
+
+function openStage(id){
+  if(!isUnlocked(id)){
+    clickSound();
+    toast("🔒 این منطقه هنوز فعال نشده؛ مرحله‌های قبلی را کامل کن.");
+    return;
+  }
+  currentStage=id;
+  ensureStageState(id);
+  currentGame=null;quizQuestion=null;
+  renderStage();
+  document.getElementById("stageOverlay").classList.add("show");
+}
+function closeStage(){
+  document.getElementById("stageOverlay").classList.remove("show");
+  currentStage=null;currentGame=null;quizQuestion=null;
+}
+function renderTabs(){
+  const t=Number(S.tab[currentStage]||0);
+  const names=["🔎 کشف","🧭 کاوش","🎮 تعامل","📝 آزمون کوتاه"];
+  document.getElementById("tabs").innerHTML=names.map((n,i)=>{
+    const allowed=isDone(currentStage)||i<=t;
+    const cls=(i===t?"current ":"")+(i<t||isDone(currentStage)?"done ":"")+(allowed?"":"disabled");
+    return `<button class="tab-btn ${cls}" data-tab="${i}" ${allowed?"":"disabled"}>${n}</button>`;
+  }).join("");
+  document.querySelectorAll("[data-tab]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const i=Number(btn.dataset.tab);
+      if(isDone(currentStage)||i<=Number(S.tab[currentStage]||0)){
+        S.tab[currentStage]=i;saveState();renderStage();clickSound();
+      }
+    });
+  });
+}
+function renderStage(){
+  const st=stageById(currentStage);
+  const tab=Number(S.tab[currentStage]||0);
+  document.getElementById("stageTitle").textContent=`${st.icon} ${st.title} — ${st.role}`;
+  renderTabs();
+
+  if(isDone(currentStage)&&tab>=4){
+    document.getElementById("stageBody").innerHTML=completedStageHTML(st);
+    return;
+  }
+
+  if(tab===0)renderDiscover(st);
+  else if(tab===1)renderExplore(st);
+  else if(tab===2)renderGame(st);
+  else renderQuiz(st);
+}
+function completedStageHTML(st){
+  const i=stageIndex(st.id),next=STAGES[i+1];
+  return `<div class="section-intro" style="text-align:center">
+    <div style="font-size:45px">🌟</div>
+    <h3>مرحلهٔ ${esc(st.title)} کامل شد!</h3>
+    <p>این منطقه از شهر فعال است و اطلاعات آن هر زمان قابل مرور است.</p>
+    ${next?`<button class="main-btn" id="nextStageBtn">مرحله بعد → ${esc(next.title)}</button>`:`<button class="main-btn" id="finishBtn">🎉 مشاهده شهر کامل</button>`}
+  </div>`;
+}
+function renderDiscover(st){
+  document.getElementById("stageBody").innerHTML=`
+    <div class="section-intro">
+      <div style="font-size:42px;margin-bottom:8px">${st.icon}</div>
+      <h3 style="margin-top:0">${esc(st.title)}</h3>
+      <p>${esc(st.intro)}</p>
+    </div>
+    <div class="next-row">
+      <span style="font-size:12px;color:var(--muted)">مرحله ۱ از ۴</span>
+      <button class="small-btn primary" id="continueBtn">ورود به کاوش →</button>
+    </div>`;
+  document.getElementById("continueBtn").onclick=()=>{
+    clickSound();S.tab[currentStage]=1;saveState();renderStage();
+  };
+}
+function renderExplore(st){
+  document.getElementById("stageBody").innerHTML=`
+    <div class="info-grid">
+      ${st.explore.map(x=>`<div class="info-card"><b>${esc(x[0])}</b>${esc(x[1])}</div>`).join("")}
+    </div>
+    <div class="next-row">
+      <span style="font-size:12px;color:var(--muted)">مرحله ۲ از ۴</span>
+      <button class="small-btn primary" id="continueBtn">آماده‌ام؛ بازی را شروع کن 🎮</button>
+    </div>`;
+  document.getElementById("continueBtn").onclick=()=>{
+    clickSound();resetCurrentGameChance();S.tab[currentStage]=2;saveState();renderStage();
+  };
+}
+
+/* =========================
+   موتور بازی
+========================= */
+
+function renderGame(st){
+  ensureStageState(st.id);
+  if(!currentGame||currentGame.stage!==st.id){
+    currentGame={stage:st.id,data:GAMES[st.id].make(),done:false,selected:[],pairsDone:[],selectedKey:null,selectedLeft:null,selectedRight:null};
+  }
+  const g=GAMES[st.id];
+  const d=currentGame.data;
+  let html=`
+    <div class="game-box">
+      <div class="game-head">
+        <h3>🎮 ${esc(g.title)}</h3>
+        <div class="lives">${chancesText(st.id)}</div>
+      </div>
+      <p class="instruction">${esc(g.instruction)}</p>
+      <div id="gameArea">`;
+
+  if(g.type==="choice")html+=gameChoiceHTML(d);
+  if(g.type==="sequence")html+=gameSequenceHTML(d);
+  if(g.type==="connect")html+=gameConnectHTML(d);
+  if(g.type==="match")html+=gameMatchHTML(d);
+  if(g.type==="path")html+=gamePathHTML(d);
+
+  html+=`</div>
+    <div id="gameFeedback" class="feedback"></div>
+    <div class="next-row">
+      <span style="font-size:11px;color:var(--muted)">سه فرصت داری؛ اشتباه، مرحله را از اول نمی‌کند.</span>
+      <button class="small-btn primary" id="gameContinue" disabled>ادامه به آزمون →</button>
+    </div>
+    </div>`;
+  document.getElementById("stageBody").innerHTML=html;
+  bindGame();
+}
+function gameChoiceHTML(d){
+  return `<div class="choices">${d.options.map((x,i)=>`<button class="choice" data-choice="${esc(x)}">${esc(x)}</button>`).join("")}</div>`;
+}
+function gameSequenceHTML(d){
+  return `<div class="sequence" id="sourceSeq">
+    ${d.items.map((x,i)=>`<button class="seq-item" data-seq="${esc(x)}">${i+1}. ${esc(x)}</button>`).join("")}
+  </div>
+  <div style="font-size:12px;color:var(--muted);margin-top:10px">ترتیب انتخاب تو:</div>
+  <div class="drop-zone" id="selectedSeq"></div>
+  <button class="small-btn" id="checkSequence" style="margin-top:10px">بررسی ترتیب</button>`;
+}
+function gameConnectHTML(d){
+  const left=d.pairs.map(x=>x[0]);
+  const right=shuffle(d.pairs.map(x=>x[1]));
+  return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div><div style="font-size:11px;color:var(--muted);margin-bottom:7px">کارت‌ها</div>${left.map(x=>`<button class="choice left-card" data-left="${esc(x)}">${esc(x)}</button>`).join("")}</div>
+    <div><div style="font-size:11px;color:var(--muted);margin-bottom:7px">مقصدها</div>${right.map(x=>`<button class="choice right-card" data-right="${esc(x)}">${esc(x)}</button>`).join("")}</div>
+  </div>
+  <div id="matchProgress" style="margin-top:12px;color:var(--muted);font-size:12px">۰ از ${d.pairs.length} اتصال</div>`;
+}
+function gameMatchHTML(d){return gameConnectHTML(d)}
+function gamePathHTML(d){
+  return `<div class="sequence" id="pathSource">${d.items.map(x=>`<button class="seq-item" data-path="${esc(x)}">${esc(x)}</button>`).join("")}</div>
+  <div style="font-size:12px;color:var(--muted);margin-top:10px">مسیر انتخابی:</div>
+  <div class="drop-zone" id="pathSelected"></div>
+  <button class="small-btn" id="checkPath" style="margin-top:10px">بررسی مسیر</button>`;
+}
+
+function bindGame(){
+  const g=GAMES[currentStage];
+  if(g.type==="choice"){
+    document.querySelectorAll("[data-choice]").forEach(btn=>{
+      btn.addEventListener("click",()=>choiceGame(btn));
+    });
+  }
+  if(g.type==="sequence"){
+    document.querySelectorAll("[data-seq]").forEach(btn=>{
+      btn.addEventListener("click",()=>selectSequence(btn,"selectedSeq","data-seq"));
+    });
+    document.getElementById("checkSequence").onclick=()=>checkSequence(currentGame.data.correct,"selectedSeq");
+  }
+  if(g.type==="path"){
+    document.querySelectorAll("[data-path]").forEach(btn=>{
+      btn.addEventListener("click",()=>selectSequence(btn,"pathSelected","data-path"));
+    });
+    document.getElementById("checkPath").onclick=()=>checkSequence(currentGame.data.correct,"pathSelected");
+  }
+  if(g.type==="connect"||g.type==="match"){
+    document.querySelectorAll(".left-card").forEach(b=>b.onclick=()=>selectLeft(b));
+    document.querySelectorAll(".right-card").forEach(b=>b.onclick=()=>selectRight(b));
+  }
+  document.getElementById("gameContinue").onclick=()=>{
+    S.tab[currentStage]=3;saveState();renderStage();clickSound();
+  };
+}
+function showGameFeedback(ok,msg){
+  const el=document.getElementById("gameFeedback");
+  el.className="feedback show "+(ok?"ok":"bad");
+  el.innerHTML=msg;
+}
+function gameComplete(){
+  currentGame.done=true;
+  document.getElementById("gameContinue").disabled=false;
+  successActionVisual();
+}
+function successActionVisual(){
+  const btn=document.getElementById("gameContinue");
+  if(btn){btn.textContent="ادامه به آزمون کوتاه →";btn.disabled=false}
+  burst(window.innerWidth/2,window.innerHeight/2);
+}
+function failGame(msg){
+  const left=useChance();
+  wrongAction();
+  if(left>0){
+    showGameFeedback(false,`❌ هنوز فرصت داری.<br>${esc(msg)}<br><b>فرصت باقی‌مانده: ${left}</b>`);
+  }else{
+    showGameFeedback(false,`⚠️ هر سه فرصت این بازی مصرف شد.<br>${esc(msg)}<br>
+      برای اینکه مرحله از اول نشود، می‌توانی پاسخ درست را مرور کنی و بازی را تکمیل کنی.
+      <br><button class="small-btn primary" id="revealGame">مرور پاسخ درست و ادامه</button>`);
+    document.getElementById("revealGame").onclick=()=>{
+      showGameFeedback(true,"💡 پاسخ علمی مرور شد. حالا می‌توانی به آزمون کوتاه بروی.");
+      gameComplete();
+    };
+  }
+}
+function choiceGame(btn){
+  if(currentGame.done)return;
+  const d=currentGame.data;
+  const val=btn.dataset.choice;
+  const correct=d.correct.includes(val);
+  if(correct){
+    btn.classList.add("correct");
+    btn.disabled=true;
+    currentGame.selected.push(val);
+    if(currentGame.selected.length===d.correct.length){
+      document.querySelectorAll("[data-choice]").forEach(b=>b.disabled=true);
+      correctAction(12);gameComplete();
+      showGameFeedback(true,"✅ همهٔ انتخاب‌های درست پیدا شدند! عملکرد اندامک را درست تشخیص دادی.");
+    }else{
+      correctAction(4);
+      showGameFeedback(true,`✅ درست! ${d.correct.length-currentGame.selected.length} مورد درست دیگر پیدا کن.`);
+    }
+  }else{
+    btn.classList.add("wrong");btn.disabled=true;
+    failGame("این گزینه با نقش اصلی این اندامک سازگار نیست.");
+  }
+}
+function selectSequence(btn,target,attr){
+  if(currentGame.done)return;
+  const val=btn.getAttribute(attr);
+  if(currentGame.selected.includes(val))return;
+  currentGame.selected.push(val);
+  btn.classList.add("selected");btn.disabled=true;
+  const zone=document.getElementById(target);
+  const chip=document.createElement("span");
+  chip.className="seq-item";chip.textContent=currentGame.selected.length+". "+val;
+  zone.appendChild(chip);
+}
+function checkSequence(correct,target){
+  if(currentGame.done)return;
+  const selected=currentGame.selected;
+  if(selected.length!==correct.length){
+    failGame("هنوز همهٔ مراحل را انتخاب نکرده‌ای.");
+    return;
+  }
+  if(selected.every((x,i)=>x===correct[i])){
+    correctAction(15);showGameFeedback(true,"🎉 ترتیب کاملاً درست است.");
+    gameComplete();
+  }else{
+    failGame("ترتیب درست نیست. به رابطهٔ علمی مراحل دقت کن.");
+  }
+}
+function selectLeft(btn){
+  if(currentGame.done)return;
+  document.querySelectorAll(".left-card").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected");
+  currentGame.selectedLeft=btn.dataset.left;
+  tryPair();
+}
+function selectRight(btn){
+  if(currentGame.done)return;
+  document.querySelectorAll(".right-card").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected");
+  currentGame.selectedRight=btn.dataset.right;
+  tryPair();
+}
+function tryPair(){
+  if(!currentGame.selectedLeft||!currentGame.selectedRight)return;
+  const pair=currentGame.data.pairs.find(p=>p[0]===currentGame.selectedLeft);
+  const ok=pair&&pair[1]===currentGame.selectedRight;
+  if(ok){
+    currentGame.pairsDone.push(currentGame.selectedLeft);
+    document.querySelectorAll(".left-card,.right-card").forEach(b=>{
+      if(b.dataset.left===currentGame.selectedLeft||b.dataset.right===currentGame.selectedRight){
+        b.disabled=true;b.classList.add("correct");
+      }
+    });
+    correctAction(7);
+    document.getElementById("matchProgress").textContent=`${currentGame.pairsDone.length} از ${currentGame.data.pairs.length} اتصال`;
+    showGameFeedback(true,"🔗 اتصال درست ثبت شد.");
+    currentGame.selectedLeft=null;currentGame.selectedRight=null;
+    if(currentGame.pairsDone.length===currentGame.data.pairs.length)gameComplete();
+  }else{
+    failGame("این کارت با این مقصد جفت درست ندارد.");
+    currentGame.selectedLeft=null;currentGame.selectedRight=null;
+    document.querySelectorAll(".left-card,.right-card").forEach(b=>b.classList.remove("selected"));
+  }
+}
+
+/* =========================
+   آزمون کوتاه
+========================= */
+
+function renderQuiz(st){
+  const questions=Q.filter(q=>q.stage===st.id);
+  let available=questions.filter(q=>!S.answered[q.id]);
+  if(!available.length)available=questions;
+  quizQuestion=available[Math.floor(Math.random()*available.length)];
+  const opts=shuffle(quizQuestion.options);
+  document.getElementById("stageBody").innerHTML=`
+    <div class="quiz-box">
+      <div class="game-head">
+        <h3>📝 آزمون کوتاه ${st.icon}</h3>
+        <div class="lives">${chancesText(st.id)}</div>
+      </div>
+      <p class="quiz-question">${esc(quizQuestion.q)}</p>
+      <div class="choices">
+        ${opts.map(x=>`<button class="choice quiz-option" data-answer="${esc(x)}">${esc(x)}</button>`).join("")}
+      </div>
+      <div id="quizFeedback" class="feedback"></div>
+      <div class="next-row">
+        <span style="font-size:11px;color:var(--muted)">سؤال‌های این بخش از بانک همان اندامک انتخاب می‌شوند.</span>
+        <button class="small-btn primary" id="finishQuiz" disabled>ثبت مرحله ✓</button>
+      </div>
+    </div>`;
+  document.querySelectorAll(".quiz-option").forEach(b=>b.onclick=()=>answerQuiz(b));
+}
+function answerQuiz(btn){
+  if(!quizQuestion)return;
+  const answer=btn.dataset.answer;
+  const ok=answer===quizQuestion.correct;
+  document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
+  const fb=document.getElementById("quizFeedback");
+  if(ok){
+    btn.classList.add("correct");
+    S.answered[quizQuestion.id]={correct:true,answer};
+    sessionCorrect++;streak++;addScore(20+Math.min(streak,5));
+    successSound();saveState();awardBadges();
+    fb.className="feedback show ok";
+    fb.innerHTML=`<b>✅ پاسخ درست!</b><div class="answer-info">
+      <strong>پاسخ صحیح:</strong> ${esc(quizQuestion.correct)}<br>
+      <strong>تحلیل علمی:</strong> ${esc(quizQuestion.explanation)}<br>
+      <strong>دام سؤال:</strong> ${esc(quizQuestion.trap)}
+    </div>`;
+    document.getElementById("finishQuiz").disabled=false;
+    document.getElementById("finishQuiz").textContent="تکمیل مرحله و فعال‌سازی منطقه بعدی ✓";
+    document.getElementById("finishQuiz").onclick=()=>{
+      completeStage(currentStage);
+      const i=stageIndex(currentStage),next=STAGES[i+1];
+      if(next){
+        currentStage=next.id;
+        ensureStageState(next.id);
+        renderStage();
+        toast(`🌟 مرحله بعدی باز شد: ${next.title}`);
+      }else{
+        S.tab[currentStage]=4;saveState();renderStage();
+        toast("🎉 تمام شهر یاخته فعال شد!");
+      }
+    };
+    S.tab[currentStage]=4;saveState();
+  }else{
+    btn.classList.add("wrong");
+    wrongAction();
+    const left=useChance();
+    S.answered[quizQuestion.id]={correct:false,answer};
+    const old=S.mistakes.findIndex(m=>m.id===quizQuestion.id);
+    const mistake={
+      id:quizQuestion.id,
+      stage:currentStage,
+      question:quizQuestion.q,
+      userAnswer:answer,
+      correctAnswer:quizQuestion.correct,
+      explanation:quizQuestion.explanation,
+      trap:quizQuestion.trap,
+      time:new Date().toLocaleString("fa-IR")
+    };
+    if(old>=0)S.mistakes[old]=mistake;else S.mistakes.unshift(mistake);
+    saveState();
+    fb.className="feedback show bad";
+    fb.innerHTML=`<b>❌ این گزینه درست نیست.</b><div class="answer-info">
+      <strong>پاسخ شما:</strong> ${esc(answer)}<br>
+      <strong>پاسخ صحیح:</strong> ${esc(quizQuestion.correct)}<br>
+      <strong>تحلیل علمی:</strong> ${esc(quizQuestion.explanation)}<br>
+      <strong>دام سؤال:</strong> ${esc(quizQuestion.trap)}<br>
+      <strong>فرصت باقی‌مانده:</strong> ${left}
+    </div>`;
+    if(left>0){
+      setTimeout(()=>renderQuiz(currentStage),900);
+    }else{
+      document.getElementById("finishQuiz").disabled=false;
+      document.getElementById("finishQuiz").textContent="مرور پاسخ و ادامه مرحله";
+      document.getElementById("finishQuiz").onclick=()=>{
+        S.tab[currentStage]=4;
+        completeStage(currentStage);
+        const i=stageIndex(currentStage),next=STAGES[i+1];
+        if(next){
+          currentStage=next.id;ensureStageState(next.id);renderStage();
+          toast(`🌟 مرحله بعدی باز شد: ${next.title}`);
+        }else renderStage();
+      };
+    }
+  }
+}
+
+/* =========================
+   مأموریت پروتئین
+========================= */
+
+function openMission(){
+  document.getElementById("genericTitle").textContent="🧬 مسیر یک پروتئین";
+  const correct=["رناتن","شبکه زبر","دستگاه گلژی","ریزکیسه","مقصد"];
+  let selected=[];
+  let items=shuffle([...correct]);
+  document.getElementById("genericBody").innerHTML=`
+    <div class="section-intro">
+      <b>ماموریت:</b> مسیر یک پروتئین ترشحی را درست بچین.
+      <br>راهنمای علمی: پروتئین در رناتن ساخته می‌شود، وارد مسیر شبکه زبر می‌شود، در گلژی پردازش و بسته‌بندی می‌شود و سپس با ریزکیسه جابه‌جا می‌شود.
+    </div>
+    <div class="sequence" id="missionSource" style="margin-top:14px">
+      ${items.map(x=>`<button class="seq-item mission-item" data-value="${esc(x)}">${esc(x)}</button>`).join("")}
+    </div>
+    <div style="margin-top:12px;color:var(--muted);font-size:12px">ترتیب انتخابی:</div>
+    <div class="drop-zone" id="missionSelected"></div>
+    <div id="missionFeedback" class="feedback"></div>
+    <div class="next-row">
+      <span style="font-size:11px;color:var(--muted)">ترتیب گزینه‌ها هر بار تصادفی است.</span>
+      <button class="small-btn primary" id="checkMission">بررسی مأموریت</button>
+    </div>`;
+  document.getElementById("genericOverlay").classList.add("show");
+  document.querySelectorAll(".mission-item").forEach(btn=>{
+    btn.onclick=()=>{
+      if(selected.includes(btn.dataset.value))return;
+      selected.push(btn.dataset.value);btn.disabled=true;btn.classList.add("selected");
+      const c=document.createElement("span");c.className="seq-item";c.textContent=selected.length+". "+btn.dataset.value;
+      document.getElementById("missionSelected").appendChild(c);
+    };
+  });
+  document.getElementById("checkMission").onclick=()=>{
+    const fb=document.getElementById("missionFeedback");
+    if(selected.length!==correct.length){
+      fb.className="feedback show bad";fb.textContent="هنوز همهٔ ایستگاه‌ها را انتخاب نکرده‌ای.";return;
+    }
+    if(selected.every((x,i)=>x===correct[i])){
+      S.missionDone=true;saveState();missionSound();sessionScore+=50;updateDashboard();awardBadges();burst(window.innerWidth/2,window.innerHeight/2);
+      fb.className="feedback show ok";
+      fb.innerHTML="<b>🎉 مأموریت موفق!</b><br>مسیر رناتن → شبکه زبر → دستگاه گلژی → ریزکیسه → مقصد را درست پیدا کردی.<br>⭐ ۵۰ امتیاز دانشی اضافه شد.";
+      document.getElementById("checkMission").disabled=true;
+    }else{
+      errorSound();
+      fb.className="feedback show bad";
+      fb.innerHTML="❌ مسیر درست نیست. دوباره رابطهٔ ساخت، پردازش، بسته‌بندی و انتقال را بررسی کن.";
+    }
+  };
+}
+
+/* =========================
+   گزارش
+========================= */
+
+function openReport(){
+  const pct=Math.round(S.done.length/STAGES.length*100);
+  const city=STAGES.map(s=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+    <span>${s.icon} ${s.title}</span><span style="color:${isDone(s.id)?"var(--green)":isUnlocked(s.id)?"var(--cyan)":"#657983"}">${isDone(s.id)?"کامل ✓":isUnlocked(s.id)?"فعال":"قفل"}</span>
+  </div>`).join("");
+  document.getElementById("genericTitle").textContent="📊 گزارش پیشرفت من";
+  document.getElementById("genericBody").innerHTML=`
+    <div class="report-grid">
+      <div class="report-item"><b>${pct}%</b><span>پیشرفت کلی شهر</span></div>
+      <div class="report-item"><b>${S.done.length}/${STAGES.length}</b><span>مراحل کامل‌شده</span></div>
+      <div class="report-item"><b>${sessionCorrect}</b><span>پاسخ درست این جلسه</span></div>
+      <div class="report-item"><b>${sessionWrong}</b><span>پاسخ نادرست این جلسه</span></div>
+      <div class="report-item"><b>${sessionScore}</b><span>امتیاز این جلسه</span></div>
+      <div class="report-item"><b>${S.mistakes.length}</b><span>سؤال در آزمایشگاه اشتباهات</span></div>
+    </div>
+    <div class="section-intro" style="margin-top:14px">${city}</div>`;
+  document.getElementById("genericOverlay").classList.add("show");
+}
+function openMistakes(){
+  document.getElementById("genericTitle").textContent="🧪 آزمایشگاه اشتباهات من";
+  let body="";
+  if(!S.mistakes.length){
+    body=`<div class="lock-note">🌱 هنوز اشتباهی ثبت نشده است.<br>با پاسخ دادن به آزمون‌ها، اگر گزینه‌ای را اشتباه بزنی اینجا برای مرور ذخیره می‌شود.</div>`;
+  }else{
+    body=S.mistakes.map((m,i)=>`
+      <div class="mistake">
+        <h4>${i+1}. ${esc(stageById(m.stage)?.title||"مرحله")}</h4>
+        <b>${esc(m.question)}</b>
+        <div style="margin-top:7px"><span style="color:#ff9aae">پاسخ شما:</span> ${esc(m.userAnswer)}</div>
+        <div><span style="color:var(--green)">پاسخ صحیح:</span> ${esc(m.correctAnswer)}</div>
+        <div><span style="color:var(--cyan)">تحلیل علمی:</span> ${esc(m.explanation)}</div>
+        <div><span style="color:var(--yellow)">دام:</span> ${esc(m.trap)}</div>
+      </div>`).join("");
+  }
+  document.getElementById("genericBody").innerHTML=body;
+  document.getElementById("genericOverlay").classList.add("show");
+}
+
+/* =========================
+   ذرات و افکت
+========================= */
+
+function initParticles(){
+  const canvas=document.getElementById("particles"),ctx=canvas.getContext("2d");
+  let W=innerWidth,H=innerHeight;
+  const p=[];
+  function resize(){W=canvas.width=innerWidth*devicePixelRatio;H=canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);W=innerWidth;H=innerHeight}
+  resize();addEventListener("resize",resize);
+  for(let i=0;i<80;i++)p.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.7+.3,v:Math.random()*.25+.05,a:Math.random()*.55+.15});
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    for(const x of p){
+      x.y-=x.v;if(x.y<-5)x.y=H+5;
+      ctx.beginPath();ctx.arc(x.x,x.y,x.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(100,220,255,${x.a})`;ctx.fill();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+}
+function burst(x,y){
+  for(let i=0;i<18;i++){
+    const s=document.createElement("i");s.className="spark";
+    s.style.left=x+"px";s.style.top=y+"px";
+    const a=Math.random()*Math.PI*2,d=40+Math.random()*100;
+    s.style.setProperty("--x",Math.cos(a)*d+"px");
+    s.style.setProperty("--y",Math.sin(a)*d+"px");
+    document.body.appendChild(s);setTimeout(()=>s.remove(),900);
+  }
+}
+
+/* =========================
+   رویدادها
+========================= */
+
+function init(){
+  initParticles();
+  renderAll();
+
+  document.querySelectorAll(".building").forEach(b=>{
+    b.addEventListener("click",()=>openStage(b.dataset.stage));
+  });
+
+  document.getElementById("startBtn").onclick=()=>{
+    getAudio();startAmbient();clickSound();
+    openStage(S.unlocked.includes("nucleus")?"nucleus":S.unlocked[0]);
+  };
+  document.getElementById("soundBtn").onclick=()=>{getAudio();toggleSound()};
+  document.getElementById("reportBtn").onclick=openReport;
+  document.getElementById("mistakesBtn").onclick=openMistakes;
+  document.getElementById("missionBtn").onclick=openMission;
+  document.getElementById("missionBtn2").onclick=openMission;
+  document.getElementById("resetBtn").onclick=resetProgress;
+  document.getElementById("closeStage").onclick=closeStage;
+  document.getElementById("closeGeneric").onclick=()=>document.getElementById("genericOverlay").classList.remove("show");
+
+  document.getElementById("stageOverlay").addEventListener("click",e=>{
+    if(e.target.id==="stageOverlay")closeStage();
+  });
+  document.getElementById("genericOverlay").addEventListener("click",e=>{
+    if(e.target.id==="genericOverlay")document.getElementById("genericOverlay").classList.remove("show");
+  });
+
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){
+      closeStage();
+      document.getElementById("genericOverlay").classList.remove("show");
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
